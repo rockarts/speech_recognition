@@ -120,6 +120,12 @@ public class SwiftSpeechRecognitionPlugin: NSObject, FlutterPlugin, SFSpeechReco
       fatalError("Unable to created a SFSpeechAudioBufferRecognitionRequest object")
     }
 
+    if #available(iOS 13, *) {
+      recognitionRequest.requiresOnDeviceRecognition = true
+    } else {
+      fatalError("Voice recognition requires iOS 13 or higher.")
+    }
+
     recognitionRequest.shouldReportPartialResults = true
 
     let speechRecognizer = getRecognizer(lang: lang)
